@@ -4,14 +4,13 @@
     Connects to Azure and Locks the Resource Groups which do not have the 'Auto-DND-Lock' Lock applied on them.
     
 .DESCRIPTION
-    This Runbook connects to the All LTI Managed Subscriptions in the ELKJOP Azure environment on a defined schedule
-    using the Azure Run As Account (Service Principal), checks the 'Auto-DND-Lock' Lock status on each Resource Group
+    This Runbook connects to the All Subscriptions in the Azure environment on a defined schedule using the Azure 
+    Run As Account (Service Principal), checks the 'Auto-DND-Lock' Lock status on each Resource Group
     and applies the 'Auto-DND-Lock' Lock on the ones which do not have it.
      
 .NOTES
-    Author        :    ELKJOP Automation Team
+    Author        :    Pramod Palukuru
     Company       :    LTI
-    Email         :    pramodreddy.p.v@lntinfotech.com
     Created       :    10-05-2020
     Last Updated  :    10-05-2020
     Version       :    1.0
@@ -22,17 +21,8 @@
     2. Any Excluded Resource Group Names from the Automation Variable
 #>
 
-$ConnectionName = "AzureRunAsConnection"
-
-# Get the connection "AzureRunAsConnection"
-$servicePrincipalConnection = Get-AutomationConnection -Name $ConnectionName
-
    "Logging in to Azure..."
-Add-AzAccount `
-        -ServicePrincipal `
-        -TenantId $servicePrincipalConnection.TenantId `
-        -ApplicationId $servicePrincipalConnection.ApplicationId `
-        -CertificateThumbprint $servicePrincipalConnection.CertificateThumbprint 
+Login-AzAccount
 
 $SubscriptionList = Get-AutomationVariable -Name 'AllSubscriptionsinScope'
 $Subscriptions = $SubscriptionList.split(',')
