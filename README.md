@@ -12,11 +12,8 @@ This Runbook connects to the All Subscriptions in the Azure environment on a def
 NOTES
     
 Author        :    Pramod Palukuru
-
 Created       :    10-05-2020
-
 Last Updated  :    10-05-2020
-
 Version       :    1.0
 
 INPUTS
